@@ -1,6 +1,7 @@
 import openai
 import os
 from pydantic import BaseModel
+from .utils import SESSION_INSTRUCTIONS
 
 
 def structured_output_prompt(
@@ -18,11 +19,15 @@ def structured_output_prompt(
     """
     client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+    # Add system instructions for computer control
+    messages = [
+        {"role": "system", "content": SESSION_INSTRUCTIONS},
+        {"role": "user", "content": prompt},
+    ]
+
     completion = client.beta.chat.completions.parse(
         model=llm_model,
-        messages=[
-            {"role": "user", "content": prompt},
-        ],
+        messages=messages,
         response_format=response_format,
     )
 
@@ -47,11 +52,15 @@ def chat_prompt(prompt: str, model: str) -> str:
     """
     client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+    # Add system instructions for computer control
+    messages = [
+        {"role": "system", "content": SESSION_INSTRUCTIONS},
+        {"role": "user", "content": prompt},
+    ]
+
     completion = client.beta.chat.completions.parse(
         model=model,
-        messages=[
-            {"role": "user", "content": prompt},
-        ],
+        messages=messages,
     )
 
     message = completion.choices[0].message
