@@ -18,13 +18,73 @@
   "human_name": "Adam",
   "sql_dialect": "duckdb",
   "system_message_suffix": "Keep all of your responses ultra short. Say things like: 'Task complete', 'I'm sorry sir, There was an error', 'One moment, sir'.",
+  "voice_settings": {
+    "personality": "jarvis",
+    "voice_characteristics": {
+      "style": "professional and courteous",
+      "tone": "confident and sophisticated",
+      "speaking_rate": "measured and clear",
+      "reference": "Inspired by J.A.R.V.I.S. from Iron Man",
+      "key_phrases": {
+        "standard_responses": [
+          "Indeed, sir",
+          "Right away, sir",
+          "As you wish, sir",
+          "Shall I proceed, sir?",
+          "I've completed the task, sir"
+        ],
+        "situational_responses": [
+          "Analyzing data now, sir",
+          "I've detected an anomaly, sir",
+          "Shall I run diagnostics, sir?",
+          "System modifications complete, sir",
+          "Initiating security protocols, sir"
+        ],
+        "personality_traits": [
+          "Perhaps a different approach, sir",
+          "If I may suggest an alternative, sir",
+          "That would be inadvisable, sir",
+          "Most impressive, sir",
+          "I've taken the liberty of..."
+        ],
+        "status_updates": [
+          "Processing at maximum capacity, sir",
+          "Task completion at 67%, sir",
+          "Background processes optimized, sir",
+          "Standing by for further instructions, sir",
+          "Maintaining system integrity, sir"
+        ]
+      }
+    }
+  },
+  "computer_control": {
+    "enabled": true,
+    "permissions": [
+      "mouse",
+      "keyboard",
+      "window",
+      "screenshot",
+      "ocr"
+    ],
+    "safety_settings": {
+      "failsafe_corner": true,
+      "action_delay": 0.1
+    }
+  },
   "flowise_ai": {
     "enabled": true,
     "default_agent": "jarvis",
     "agents": {
       "jarvis": {
         "name": "Jarvis",
-        "description": "General purpose AI assistant connected to multiple APIs"
+        "description": "General purpose AI assistant connected to multiple APIs",
+        "capabilities": [
+          "Web browsing and research",
+          "System control and automation",
+          "Data analysis and visualization",
+          "Task scheduling and management",
+          "Natural language processing"
+        ]
       },
       "psychographicAvatar": {
         "name": "Psychographic Avatar",
