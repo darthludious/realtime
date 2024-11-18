@@ -149,7 +149,7 @@ class RealtimeAPI:
             "session": {
                 "modalities": ["text", "audio"],
                 "instructions": SESSION_INSTRUCTIONS,
-                "voice": "alloy",
+                "voice": "Ballad",
                 "input_audio_format": "pcm16",
                 "output_audio_format": "pcm16",
                 "turn_detection": {

@@ -200,8 +200,6 @@ async def ingest_file(prompt: str) -> dict:
 
         }
 
-
-
     file_path = os.path.join(scratch_pad_dir, file_selection_response.file)
 
 
@@ -217,8 +215,6 @@ async def ingest_file(prompt: str) -> dict:
             "success": False,
 
         }
-
-
 
     # Read the file content
 
@@ -239,8 +235,6 @@ async def ingest_file(prompt: str) -> dict:
             "success": False,
 
         }
-
-
 
     return {
 
@@ -313,8 +307,6 @@ async def reset_active_memory(force_delete: bool = False) -> dict:
             "message": "Are you sure you want to reset the active memory? This action cannot be undone. Reply with 'force delete' to confirm.",
 
         }
-
-
 
     memory_manager.reset()
 
@@ -814,8 +806,6 @@ async def update_file(prompt: str, model: ModelName = ModelName.base_model) -> d
 
         return {"status": "No matching file found"}
 
-
-
     selected_file = file_selection_response.file
 
     file_path = os.path.join(scratch_pad_dir, selected_file)
@@ -940,8 +930,6 @@ async def load_tables_into_memory() -> dict:
 
         return {"status": "error", "message": "No SQL dialect provided."}
 
-
-
     # Step 2: Load the database URL from environment variables
 
     database_url_env_var = f"{sql_dialect.upper()}_URL"
@@ -958,8 +946,6 @@ async def load_tables_into_memory() -> dict:
 
         }
 
-
-
     # Step 3: Get the database instance using the factory function
 
     try:
@@ -969,8 +955,6 @@ async def load_tables_into_memory() -> dict:
     except ValueError as e:
 
         return {"status": "error", "message": str(e)}
-
-
 
     # Step 4: Connect to the database
 
@@ -982,8 +966,6 @@ async def load_tables_into_memory() -> dict:
 
         return {"status": "error", "message": f"Failed to connect: {str(e)}"}
 
-
-
     # Step 5: Read table definitions
 
     try:
@@ -993,8 +975,6 @@ async def load_tables_into_memory() -> dict:
     except Exception as e:
 
         return {"status": "error", "message": f"Failed to read tables: {str(e)}"}
-
-
 
     # Step 6: Save table definitions to active memory
 
@@ -1028,8 +1008,6 @@ async def generate_sql_save_to_file(prompt: str) -> dict:
 
         return {"status": "error", "message": "No SQL dialect provided."}
 
-
-
     # Step 2: Load the database URL from environment variables
 
     database_url_env_var = f"{sql_dialect.upper()}_URL"
@@ -1046,8 +1024,6 @@ async def generate_sql_save_to_file(prompt: str) -> dict:
 
         }
 
-
-
     # Step 3: Get the database instance using the factory function
 
     try:
@@ -1057,8 +1033,6 @@ async def generate_sql_save_to_file(prompt: str) -> dict:
     except ValueError as e:
 
         return {"status": "error", "message": str(e)}
-
-
 
     # Step 4: Connect to the database
 
@@ -1070,8 +1044,6 @@ async def generate_sql_save_to_file(prompt: str) -> dict:
 
         return {"status": "error", "message": f"Failed to connect: {str(e)}"}
 
-
-
     # Step 5: Read table definitions
 
     try:
@@ -1082,37 +1054,22 @@ async def generate_sql_save_to_file(prompt: str) -> dict:
 
         return {"status": "error", "message": f"Failed to read tables: {str(e)}"}
 
-
-
     # Step 6: Generate SQL and file name using structured_output_prompt
 
     from enum import Enum
 
-
-
     class OutputFormat(str, Enum):
-
         CSV = ".csv"
-
         JSON = ".json"
 
-
-
     class GenerateSQLResponse(BaseModel):
-
         file_name: str
-
         sql_query: str
-
         output_format: OutputFormat
-
-
 
     # Get all memory content
 
     memory_content = memory_manager.get_xml_for_prompt(["*"])
-
-
 
     prompt_structure = f"""
 
@@ -1170,11 +1127,7 @@ async def generate_sql_save_to_file(prompt: str) -> dict:
 
     """
 
-
-
     response = structured_output_prompt(prompt_structure, GenerateSQLResponse)
-
-
 
     # Step 7: Save the generated SQL to a file
 
@@ -1184,13 +1137,9 @@ async def generate_sql_save_to_file(prompt: str) -> dict:
 
     sql_file_path = os.path.join(scratch_pad_dir, response.file_name)
 
-
-
     with open(sql_file_path, "w") as f:
 
         f.write(response.sql_query)
-
-
 
     return {
 
@@ -1206,28 +1155,16 @@ async def generate_sql_save_to_file(prompt: str) -> dict:
 
 from enum import Enum
 
-
-
-
-
 class OutputFormat(str, Enum):
-
     CSV = ".csv"
-
     JSONL = ".jsonl"
-
     JSON_ARRAY = ".json"
 
 
 
-
-
 class GenerateSQLResponse(BaseModel):
-
     file_name: str
-
     sql_query: str
-
     output_format: OutputFormat
 
 
@@ -1252,8 +1189,6 @@ async def generate_sql_and_execute(prompt: str) -> dict:
 
         return {"status": "error", "message": "No SQL dialect provided."}
 
-
-
     # Step 2: Load the database URL from environment variables
 
     database_url_env_var = f"{sql_dialect.upper()}_URL"
@@ -1270,8 +1205,6 @@ async def generate_sql_and_execute(prompt: str) -> dict:
 
         }
 
-
-
     # Step 3: Get the database instance using the factory function
 
     try:
@@ -1281,8 +1214,6 @@ async def generate_sql_and_execute(prompt: str) -> dict:
     except ValueError as e:
 
         return {"status": "error", "message": str(e)}
-
-
 
     # Step 4: Connect to the database
 
@@ -1294,8 +1225,6 @@ async def generate_sql_and_execute(prompt: str) -> dict:
 
         return {"status": "error", "message": f"Failed to connect: {str(e)}"}
 
-
-
     # Step 5: Read table definitions
 
     try:
@@ -1306,15 +1235,11 @@ async def generate_sql_and_execute(prompt: str) -> dict:
 
         return {"status": "error", "message": f"Failed to read tables: {str(e)}"}
 
-
-
     # Step 6: Generate SQL query, output format, and file name using structured_output_prompt
 
     # Get all memory content
 
     memory_content = memory_manager.get_xml_for_prompt(["*"])
-
-
 
     prompt_structure = f"""
 
@@ -1372,11 +1297,7 @@ async def generate_sql_and_execute(prompt: str) -> dict:
 
     """
 
-
-
     response = structured_output_prompt(prompt_structure, GenerateSQLResponse)
-
-
 
     # Step 7: Execute the SQL query
 
@@ -1388,8 +1309,6 @@ async def generate_sql_and_execute(prompt: str) -> dict:
 
         return {"status": "error", "message": f"Failed to execute SQL query: {str(e)}"}
 
-
-
     # Step 8: Save the DataFrame to a file based on the output_format
 
     scratch_pad_dir = os.getenv("SCRATCH_PAD_DIR", "./scratchpad")
@@ -1397,8 +1316,6 @@ async def generate_sql_and_execute(prompt: str) -> dict:
     os.makedirs(scratch_pad_dir, exist_ok=True)
 
     file_path = os.path.join(scratch_pad_dir, response.file_name)
-
-
 
     try:
 
@@ -1427,8 +1344,6 @@ async def generate_sql_and_execute(prompt: str) -> dict:
     except Exception as e:
 
         return {"status": "error", "message": f"Failed to save file: {str(e)}"}
-
-
 
     return {
 
@@ -1516,8 +1431,6 @@ async def run_sql_file(prompt: str) -> dict:
 
         }
 
-
-
     file_path = os.path.join(scratch_pad_dir, file_selection_response.file)
 
 
@@ -1532,8 +1445,6 @@ async def run_sql_file(prompt: str) -> dict:
 
         }
 
-
-
     # Step 2: Read the SQL query from the selected file
 
     try:
@@ -1546,8 +1457,6 @@ async def run_sql_file(prompt: str) -> dict:
 
         return {"status": "error", "message": f"Failed to read the file: {str(e)}"}
 
-
-
     # Step 3: Load sql_dialect from personalization.json
 
     sql_dialect = personalization.get("sql_dialect")
@@ -1555,8 +1464,6 @@ async def run_sql_file(prompt: str) -> dict:
     if not sql_dialect:
 
         return {"status": "error", "message": "No SQL dialect provided."}
-
-
 
     # Step 4: Load the database URL from environment variables
 
@@ -1574,8 +1481,6 @@ async def run_sql_file(prompt: str) -> dict:
 
         }
 
-
-
     # Step 5: Get the database instance using the factory function
 
     try:
@@ -1585,8 +1490,6 @@ async def run_sql_file(prompt: str) -> dict:
     except ValueError as e:
 
         return {"status": "error", "message": str(e)}
-
-
 
     # Step 6: Connect to the database
 
@@ -1598,8 +1501,6 @@ async def run_sql_file(prompt: str) -> dict:
 
         return {"status": "error", "message": f"Failed to connect: {str(e)}"}
 
-
-
     # Step 7: Execute the SQL query
 
     try:
@@ -1609,8 +1510,6 @@ async def run_sql_file(prompt: str) -> dict:
     except Exception as e:
 
         return {"status": "error", "message": f"Failed to execute SQL query: {str(e)}"}
-
-
 
     # Step 8: Determine output format and file name
 
@@ -1644,15 +1543,9 @@ async def run_sql_file(prompt: str) -> dict:
 
     """
 
-
-
     class OutputFormatResponse(BaseModel):
-
         file_name: str
-
         output_format: OutputFormat
-
-
 
     output_format_response = structured_output_prompt(
 
@@ -1664,13 +1557,9 @@ async def run_sql_file(prompt: str) -> dict:
 
     )
 
-
-
     # Step 9: Save the results to a file based on the output_format
 
     output_file_path = os.path.join(scratch_pad_dir, output_format_response.file_name)
-
-
 
     try:
 
@@ -1699,8 +1588,6 @@ async def run_sql_file(prompt: str) -> dict:
     except Exception as e:
 
         return {"status": "error", "message": f"Failed to save results: {str(e)}"}
-
-
 
     return {
 
@@ -1840,8 +1727,6 @@ async def delete_file(prompt: str, force_delete: bool = False) -> dict:
 
             result = {"status": "File deleted", "file_name": selected_file}
 
-
-
     return result
 
 
@@ -1939,8 +1824,6 @@ async def discuss_file(prompt: str, model: ModelName = ModelName.base_model) -> 
         if not file_selection_response.file:
 
             return {"status": "No matching file found"}
-
-
 
         file_path = os.path.join(scratch_pad_dir, file_selection_response.file)
 
@@ -2144,8 +2027,6 @@ async def remove_variable_from_memory(prompt: str) -> dict:
 
         return {"status": "not_found", "message": "No matching key found in memory"}
 
-
-
     if memory_manager.delete(key_selection_response.key):
 
         return {
@@ -2246,8 +2127,6 @@ async def read_file_into_memory(prompt: str) -> dict:
 
         return {"status": "error", "message": "No matching file found"}
 
-
-
     file_path = os.path.join(scratch_pad_dir, file_selection_response.file)
 
 
@@ -2261,8 +2140,6 @@ async def read_file_into_memory(prompt: str) -> dict:
             "message": f"File '{file_selection_response.file}' not found in scratch_pad_dir",
 
         }
-
-
 
     try:
 
@@ -2386,8 +2263,6 @@ async def scrap_to_file_from_clipboard() -> dict:
 
             }
 
-
-
         # Generate file name
 
         file_name_prompt = f"""
@@ -2415,10 +2290,7 @@ async def scrap_to_file_from_clipboard() -> dict:
 
 
         class FileNameResponse(BaseModel):
-
             file_name: str
-
-
 
         file_name_response = structured_output_prompt(
 
@@ -2427,8 +2299,6 @@ async def scrap_to_file_from_clipboard() -> dict:
         )
 
         file_name = file_name_response.file_name
-
-
 
         # Scrape URL
 
@@ -2498,8 +2368,6 @@ async def clipboard_to_file() -> dict:
 
         trimmed_content = content[:1000]
 
-
-
         # Generate file name
 
         file_name_prompt = f"""
@@ -2531,10 +2399,7 @@ async def clipboard_to_file() -> dict:
 
 
         class FileNameResponse(BaseModel):
-
             file_name: str
-
-
 
         file_name_response = structured_output_prompt(
 
@@ -2544,15 +2409,11 @@ async def clipboard_to_file() -> dict:
 
         file_name = file_name_response.file_name
 
-
-
         # Ensure the file name is valid
 
         file_name = re.sub(r"[^\w\-_\.]", "_", file_name)
 
         file_name = file_name[:50]  # Limit to 50 characters
-
-
 
         # Save to file
 
@@ -2660,8 +2521,6 @@ async def runnable_code_check(prompt: str) -> dict:
 
         return {"status": "No matching file found for the given prompt."}
 
-
-
     file_path = os.path.join(scratch_pad_dir, file_selection_response.file)
 
 
@@ -2674,8 +2533,6 @@ async def runnable_code_check(prompt: str) -> dict:
 
         }
 
-
-
     # Read the file content
 
     try:
@@ -2687,8 +2544,6 @@ async def runnable_code_check(prompt: str) -> dict:
     except Exception as e:
 
         return {"status": "Error", "message": f"Failed to read the file: {str(e)}"}
-
-
 
     # Step 2: Determine if the code is runnable
 
@@ -2735,8 +2590,6 @@ async def runnable_code_check(prompt: str) -> dict:
     if is_runnable_response.code_is_runnable:
 
         return {"status": "success", "message": "The code is runnable."}
-
-
 
     # Step 3: If not runnable, get the necessary changes
 
@@ -2797,8 +2650,6 @@ async def runnable_code_check(prompt: str) -> dict:
     except Exception as e:
 
         return {"status": "Error", "message": f"Failed to update the file: {str(e)}"}
-
-
 
     return {
 
@@ -2904,8 +2755,6 @@ async def run_python(prompt: str) -> dict:
 
         }
 
-
-
     file_path = os.path.join(scratch_pad_dir, file_selection_response.file)
 
 
@@ -2920,8 +2769,6 @@ async def run_python(prompt: str) -> dict:
 
         }
 
-
-
     # Read the Python code from the selected file
 
     try:
@@ -2933,8 +2780,6 @@ async def run_python(prompt: str) -> dict:
     except Exception as e:
 
         return {"status": "error", "message": f"Failed to read the file: {str(e)}"}
-
-
 
     # Execute the Python code using run_uv_script
 
@@ -2968,8 +2813,6 @@ async def run_python(prompt: str) -> dict:
 
         error_message = None
 
-
-
     return {
 
         "status": "success" if success else "failure",
@@ -2981,8 +2824,6 @@ async def run_python(prompt: str) -> dict:
         "output_file": output_file_name,
 
     }
-
-
 
 @timeit_decorator
 async def control_mouse(prompt: str) -> dict:
@@ -3147,8 +2988,6 @@ async def create_python_chart(prompt: str, chart_type: str) -> dict:
 
         }
 
-
-
     # Step 1: Select the CSV file based on the prompt
 
     select_file_prompt = f"""
@@ -3213,8 +3052,6 @@ async def create_python_chart(prompt: str, chart_type: str) -> dict:
 
         }
 
-
-
     file_path = os.path.join(scratch_pad_dir, file_selection_response.file)
 
 
@@ -3228,8 +3065,6 @@ async def create_python_chart(prompt: str, chart_type: str) -> dict:
             "message": f"CSV file '{file_selection_response.file}' does not exist in '{scratch_pad_dir}'.",
 
         }
-
-
 
     # Step 2: Read and analyze the CSV file
 
@@ -3250,8 +3085,6 @@ async def create_python_chart(prompt: str, chart_type: str) -> dict:
             "message": f"Failed to read or analyze the CSV file: {str(e)}",
 
         }
-
-
 
     # Step 3: Generate Python code for the chart
 
@@ -3399,17 +3232,27 @@ function_map = {
 
     "discuss_file": discuss_file,
 
+    "control_mouse": control_mouse,
+
+    "control_keyboard": control_keyboard,
+
+    "take_screenshot": take_screenshot,
+
+    "extract_text_from_screen": extract_text_from_screen,
+
+    "control_window": control_window,
+
     "clipboard_to_memory": clipboard_to_memory,
 
     "remove_variable_from_memory": remove_variable_from_memory,
 
     "read_file_into_memory": read_file_into_memory,
 
+    "add_to_memory": add_to_memory,
+
     "read_dir_into_memory": read_dir_into_memory,
 
     "reset_active_memory": reset_active_memory,
-
-    "add_to_memory": add_to_memory,
 
     "scrap_to_file_from_clipboard": scrap_to_file_from_clipboard,
 
@@ -3437,8 +3280,6 @@ function_map = {
 
 }
 
-
-
 # Tools array for session initialization
 
 tools = [
@@ -3464,7 +3305,6 @@ tools = [
                     "description": "The type of AI agent to query (e.g., 'general')",
 
                 },
-
                 "question": {
 
                     "type": "string",
@@ -3472,7 +3312,6 @@ tools = [
                     "description": "The question or prompt to send to the AI agent",
 
                 },
-
                 "context": {
 
                     "type": "object",
@@ -3480,15 +3319,11 @@ tools = [
                     "description": "Optional additional context for the query",
 
                 },
-
             },
-
             "required": ["agent_type", "question"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3506,9 +3341,7 @@ tools = [
             "required": [],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3530,7 +3363,6 @@ tools = [
                     "description": "The user's prompt describing the chart to create.",
 
                 },
-
                 "chart_type": {
 
                     "type": "string",
@@ -3540,15 +3372,11 @@ tools = [
                     "description": "The type of chart to create.",
 
                 },
-
             },
-
             "required": ["prompt", "chart_type"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3570,15 +3398,11 @@ tools = [
                     "description": "The user's prompt describing the SQL query to generate.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3596,9 +3420,7 @@ tools = [
             "required": [],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3620,15 +3442,11 @@ tools = [
                     "description": "Whether to force reset the memory without confirmation. Defaults to false if not specified.",
 
                 },
-
             },
-
             "required": [],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3646,9 +3464,7 @@ tools = [
             "required": [],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3670,15 +3486,11 @@ tools = [
                     "description": "The user's prompt to determine which URL to open.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3700,7 +3512,6 @@ tools = [
                     "description": "The name of the file to create.",
 
                 },
-
                 "prompt": {
 
                     "type": "string",
@@ -3708,15 +3519,11 @@ tools = [
                     "description": "The user's prompt to generate the file content.",
 
                 },
-
             },
-
             "required": ["file_name", "prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3738,35 +3545,24 @@ tools = [
                     "description": "The user's prompt describing the updates to the file.",
 
                 },
-
                 "model": {
 
                     "type": "string",
 
                     "enum": [
-
                         "state_of_the_art_model",
-
                         "reasoning_model",
-
                         "base_model",
-
                         "fast_model",
-
                     ],
-
                     "description": "The model to use for updating the file content. Defaults to 'base_model' if not explicitly specified.",
 
                 },
-
             },
-
             "required": ["prompt"],  # 'model' is optional
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3788,7 +3584,6 @@ tools = [
                     "description": "The user's prompt describing the file to delete.",
 
                 },
-
                 "force_delete": {
 
                     "type": "boolean",
@@ -3796,15 +3591,11 @@ tools = [
                     "description": "Whether to force delete the file without confirmation. Default to 'false' if not specified.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3826,35 +3617,24 @@ tools = [
                     "description": "The user's prompt, question, or statement describing what to discuss about the file content.",
 
                 },
-
                 "model": {
 
                     "type": "string",
 
                     "enum": [
-
                         "state_of_the_art_model",
-
                         "reasoning_model",
-
                         "base_model",
-
                         "fast_model",
-
                     ],
-
                     "description": "The model to use for discussing the file content. Defaults to 'base_model' if not explicitlyspecified.",
 
                 },
-
             },
-
             "required": ["prompt"],  # 'model' is optional
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3876,15 +3656,11 @@ tools = [
                     "description": "The key to use for storing the clipboard content in memory. If not provided, a default key 'clipboard_content' will be used.",
 
                 },
-
             },
-
             "required": [],  # 'key' is optional
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3906,15 +3682,11 @@ tools = [
                     "description": "The user's prompt describing what variable to remove from memory.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3936,15 +3708,11 @@ tools = [
                     "description": "The user's prompt describing the file to read into memory.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -3966,7 +3734,6 @@ tools = [
                     "description": "The key to use for storing the value in memory.",
 
                 },
-
                 "value": {
 
                     "type": "string",
@@ -3974,15 +3741,11 @@ tools = [
                     "description": "The value to store in memory.",
 
                 },
-
             },
-
             "required": ["key", "value"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4000,9 +3763,7 @@ tools = [
             "required": [],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4020,9 +3781,7 @@ tools = [
             "required": [],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4044,7 +3803,6 @@ tools = [
                     "description": "The user's prompt describing the diagram to generate.",
 
                 },
-
                 "version_count": {
 
                     "type": "integer",
@@ -4052,15 +3810,11 @@ tools = [
                     "description": "The total number of diagram versions to generate. Defaults to 1 if not specified.",
 
                 },
-
             },
-
             "required": ["prompt"],  # 'version_count' is optional
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4082,15 +3836,11 @@ tools = [
                     "description": "The user's prompt describing which file to check for runnable code.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4112,15 +3862,11 @@ tools = [
                     "description": "The user's prompt describing which Python file to execute.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4142,15 +3888,11 @@ tools = [
                     "description": "The user's prompt describing which file to ingest.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4168,9 +3910,7 @@ tools = [
             "required": [],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4188,9 +3928,7 @@ tools = [
             "required": [],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4212,15 +3950,11 @@ tools = [
                     "description": "The user's prompt describing what SQL query to generate and execute.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
     {
 
         "type": "function",
@@ -4242,14 +3976,9 @@ tools = [
                     "description": "The user's prompt describing which SQL file to execute and optionally specifying the output format.",
 
                 },
-
             },
-
             "required": ["prompt"],
 
         },
-
     },
-
 ]
-
