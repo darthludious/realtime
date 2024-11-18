@@ -1,21 +1,51 @@
 {
   "browser_urls": [
-    "https://aider.chat",
-    "https://simonwillison.net",
-    "https://hackernews.com",
+    "https://www.textnow.com/messaging",
+    "https://replicate.com/lucataco/flux-dev-lora",
+    "https://calendar.google.com/",
     "https://chat.openai.com",
     "https://notebooklm.google.com",
     "https://google.com",
     "https://youtube.com",
     "https://twitter.com",
-    "https://claude.ai/chat",
-    "https://changelog.cursor.com",
-    "https://gemini.google.com/u/1/",
-    "https://openai.com/index/introducing-the-realtime-api/"
+    "https://goose-ai.app.flowiseai.com/",
+    "https://discord.com",
+    "https://facebook.com",
+    "https://linkedin.com"
   ],
   "browser_command": "open -a 'Google Chrome'",
-  "ai_assistant_name": "Ada",
-  "human_name": "Dan",
+  "ai_assistant_name": "Jarvis",
+  "human_name": "Adam",
   "sql_dialect": "duckdb",
-  "system_message_suffix": "Keep all of your responses ultra short. Say things like: 'Task complete', 'There was an error', 'I need more information'."
+  "system_message_suffix": "Keep all of your responses ultra short. Say things like: 'Task complete', 'I'm sorry sir, There was an error', 'One moment, sir'.",
+  "flowise_ai": {
+    "enabled": true,
+    "default_agent": "jarvis",
+    "agents": {
+      "jarvis": {
+        "name": "Jarvis",
+        "description": "General purpose AI assistant connected to multiple APIs"
+      },
+      "psychographicAvatar": {
+        "name": "Psychographic Avatar",
+        "description": "Creates detailed user personas and avatars"
+      },
+      "companyProfile": {
+        "name": "Company Profile",
+        "description": "Analyzes and generates company profiles"
+      },
+      "googleDorking": {
+        "name": "Google Dorking",
+        "description": "Advanced Google search techniques"
+      },
+      "systemPromptCreator": {
+        "name": "System Prompt Creator",
+        "description": "Creates optimized system prompts"
+      },
+      "botpressIntructions": {
+        "name": "Botpress Instructions",
+        "description": "Generates Botpress configuration instructions"
+      }
+    }
+  }
 }
