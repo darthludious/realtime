@@ -21,6 +21,9 @@ dependencies = [
     "psycopg2-binary>=2.9.9",
     "duckdb>=1.1.2",
     "matplotlib>=3.9.2",
+    "pyautogui>=0.9.54",
+    "pytesseract>=0.3.10",
+    "pygetwindow>=0.0.9",
 ]
 
 [build-system]
